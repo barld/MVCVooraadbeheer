@@ -1,0 +1,665 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VooraadModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LanguageSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LeverancierSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Adresse" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PostCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LocationMagazineTitleWarningSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ActiveTo" Type="datetime" />
+          <Property Name="value" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Location_Id" Type="int" Nullable="false" />
+          <Property Name="MagazineTitle_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LocationSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Adresse" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PostCode" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MagazineSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Jaargang" Type="smallint" />
+          <Property Name="nummer" Type="smallint" />
+          <Property Name="Verschijning" Type="datetime" Nullable="false" />
+          <Property Name="UitSchappen" Type="datetime" />
+          <Property Name="BarCode" Type="int" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="MagazineTitle_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MagazineTitleLeverancierSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Leverancier_Id" Type="int" Nullable="false" />
+          <Property Name="MagazineSerie_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MagazineTitleSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Language_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MagazineTransactionSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="LocationFromId" Type="int" />
+          <Property Name="LocationToId" Type="int" />
+          <Property Name="TransactionType" Type="int" Nullable="false" />
+          <Property Name="Magazine_Id" Type="int" Nullable="false" />
+          <Property Name="Leverancier_Id" Type="int" />
+        </EntityType>
+        <Association Name="FK_LanguageMagazineSerie">
+          <End Role="LanguageSet" Type="Self.LanguageSet" Multiplicity="1" />
+          <End Role="MagazineTitleSet" Type="Self.MagazineTitleSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LanguageSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTitleSet">
+              <PropertyRef Name="Language_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LeverancierMagazineTransaction">
+          <End Role="LeverancierSet" Type="Self.LeverancierSet" Multiplicity="0..1" />
+          <End Role="MagazineTransactionSet" Type="Self.MagazineTransactionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LeverancierSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransactionSet">
+              <PropertyRef Name="Leverancier_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LeverancierProductLeverancier">
+          <End Role="LeverancierSet" Type="Self.LeverancierSet" Multiplicity="1" />
+          <End Role="MagazineTitleLeverancierSet" Type="Self.MagazineTitleLeverancierSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LeverancierSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTitleLeverancierSet">
+              <PropertyRef Name="Leverancier_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationMagazineTitleWarningMagazineTitle">
+          <End Role="MagazineTitleSet" Type="Self.MagazineTitleSet" Multiplicity="1" />
+          <End Role="LocationMagazineTitleWarningSet" Type="Self.LocationMagazineTitleWarningSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MagazineTitleSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationMagazineTitleWarningSet">
+              <PropertyRef Name="MagazineTitle_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationMagazineWarningLocation">
+          <End Role="LocationSet" Type="Self.LocationSet" Multiplicity="1" />
+          <End Role="LocationMagazineTitleWarningSet" Type="Self.LocationMagazineTitleWarningSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocationSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LocationMagazineTitleWarningSet">
+              <PropertyRef Name="Location_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MagazineMagazineTransaction">
+          <End Role="MagazineSet" Type="Self.MagazineSet" Multiplicity="1" />
+          <End Role="MagazineTransactionSet" Type="Self.MagazineTransactionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MagazineSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransactionSet">
+              <PropertyRef Name="Magazine_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MagazineSerieMagazine">
+          <End Role="MagazineTitleSet" Type="Self.MagazineTitleSet" Multiplicity="1" />
+          <End Role="MagazineSet" Type="Self.MagazineSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MagazineTitleSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineSet">
+              <PropertyRef Name="MagazineTitle_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MagazineSerieMagazineSerieLeverancier">
+          <End Role="MagazineTitleSet" Type="Self.MagazineTitleSet" Multiplicity="1" />
+          <End Role="MagazineTitleLeverancierSet" Type="Self.MagazineTitleLeverancierSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MagazineTitleSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTitleLeverancierSet">
+              <PropertyRef Name="MagazineSerie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MagazineTransactionLocation">
+          <End Role="LocationSet" Type="Self.LocationSet" Multiplicity="0..1" />
+          <End Role="MagazineTransactionSet" Type="Self.MagazineTransactionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocationSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransactionSet">
+              <PropertyRef Name="LocationFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MagazineTransactionLocation1">
+          <End Role="LocationSet" Type="Self.LocationSet" Multiplicity="0..1" />
+          <End Role="MagazineTransactionSet" Type="Self.MagazineTransactionSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LocationSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransactionSet">
+              <PropertyRef Name="LocationToId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VooraadModelsStoreContainer">
+          <EntitySet Name="LanguageSet" EntityType="Self.LanguageSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LeverancierSet" EntityType="Self.LeverancierSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationMagazineTitleWarningSet" EntityType="Self.LocationMagazineTitleWarningSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationSet" EntityType="Self.LocationSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MagazineSet" EntityType="Self.MagazineSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MagazineTitleLeverancierSet" EntityType="Self.MagazineTitleLeverancierSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MagazineTitleSet" EntityType="Self.MagazineTitleSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MagazineTransactionSet" EntityType="Self.MagazineTransactionSet" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LanguageMagazineSerie" Association="Self.FK_LanguageMagazineSerie">
+            <End Role="LanguageSet" EntitySet="LanguageSet" />
+            <End Role="MagazineTitleSet" EntitySet="MagazineTitleSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeverancierMagazineTransaction" Association="Self.FK_LeverancierMagazineTransaction">
+            <End Role="LeverancierSet" EntitySet="LeverancierSet" />
+            <End Role="MagazineTransactionSet" EntitySet="MagazineTransactionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LeverancierProductLeverancier" Association="Self.FK_LeverancierProductLeverancier">
+            <End Role="LeverancierSet" EntitySet="LeverancierSet" />
+            <End Role="MagazineTitleLeverancierSet" EntitySet="MagazineTitleLeverancierSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationMagazineTitleWarningMagazineTitle" Association="Self.FK_LocationMagazineTitleWarningMagazineTitle">
+            <End Role="MagazineTitleSet" EntitySet="MagazineTitleSet" />
+            <End Role="LocationMagazineTitleWarningSet" EntitySet="LocationMagazineTitleWarningSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationMagazineWarningLocation" Association="Self.FK_LocationMagazineWarningLocation">
+            <End Role="LocationSet" EntitySet="LocationSet" />
+            <End Role="LocationMagazineTitleWarningSet" EntitySet="LocationMagazineTitleWarningSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MagazineMagazineTransaction" Association="Self.FK_MagazineMagazineTransaction">
+            <End Role="MagazineSet" EntitySet="MagazineSet" />
+            <End Role="MagazineTransactionSet" EntitySet="MagazineTransactionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MagazineSerieMagazine" Association="Self.FK_MagazineSerieMagazine">
+            <End Role="MagazineTitleSet" EntitySet="MagazineTitleSet" />
+            <End Role="MagazineSet" EntitySet="MagazineSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MagazineSerieMagazineSerieLeverancier" Association="Self.FK_MagazineSerieMagazineSerieLeverancier">
+            <End Role="MagazineTitleSet" EntitySet="MagazineTitleSet" />
+            <End Role="MagazineTitleLeverancierSet" EntitySet="MagazineTitleLeverancierSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MagazineTransactionLocation" Association="Self.FK_MagazineTransactionLocation">
+            <End Role="LocationSet" EntitySet="LocationSet" />
+            <End Role="MagazineTransactionSet" EntitySet="MagazineTransactionSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MagazineTransactionLocation1" Association="Self.FK_MagazineTransactionLocation1">
+            <End Role="LocationSet" EntitySet="LocationSet" />
+            <End Role="MagazineTransactionSet" EntitySet="MagazineTransactionSet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VooraadModels" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="VooraadModelsContainer" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="LocationSet" EntityType="VooraadModels.Location" />
+          <EntitySet Name="MagazineSet" EntityType="VooraadModels.Magazine" />
+          <EntitySet Name="MagazineTransactionSet" EntityType="VooraadModels.MagazineTransaction" />
+          <EntitySet Name="LeverancierSet" EntityType="VooraadModels.Leverancier" />
+          <EntitySet Name="MagazineTitleLeverancierSet" EntityType="VooraadModels.MagazineTitleLeverancier" />
+          <EntitySet Name="MagazineTitleSet" EntityType="VooraadModels.MagazineTitle" />
+          <EntitySet Name="LanguageSet" EntityType="VooraadModels.Language" />
+          <EntitySet Name="LocationMagazineTitleWarningSet" EntityType="VooraadModels.LocationMagazineTitleWarning" />
+          <AssociationSet Name="MagazineTransactionLocation" Association="VooraadModels.MagazineTransactionLocation">
+            <End Role="MagazineTransaction" EntitySet="MagazineTransactionSet" />
+            <End Role="Location" EntitySet="LocationSet" />
+          </AssociationSet>
+          <AssociationSet Name="MagazineTransactionLocation1" Association="VooraadModels.MagazineTransactionLocation1">
+            <End Role="MagazineTransaction" EntitySet="MagazineTransactionSet" />
+            <End Role="Location" EntitySet="LocationSet" />
+          </AssociationSet>
+          <AssociationSet Name="LocationMagazineWarningLocation" Association="VooraadModels.LocationMagazineWarningLocation">
+            <End Role="LocationMagazineWarning" EntitySet="LocationMagazineTitleWarningSet" />
+            <End Role="Location" EntitySet="LocationSet" />
+          </AssociationSet>
+          <AssociationSet Name="LeverancierProductLeverancier" Association="VooraadModels.LeverancierProductLeverancier">
+            <End Role="Leverancier" EntitySet="LeverancierSet" />
+            <End Role="MagazineSerieLeverancier" EntitySet="MagazineTitleLeverancierSet" />
+          </AssociationSet>
+          <AssociationSet Name="MagazineSerieMagazineSerieLeverancier" Association="VooraadModels.MagazineSerieMagazineSerieLeverancier">
+            <End Role="MagazineTitle" EntitySet="MagazineTitleSet" />
+            <End Role="MagazineSerieLeverancier" EntitySet="MagazineTitleLeverancierSet" />
+          </AssociationSet>
+          <AssociationSet Name="LocationMagazineTitleWarningMagazineTitle" Association="VooraadModels.LocationMagazineTitleWarningMagazineTitle">
+            <End Role="LocationMagazineTitleWarning" EntitySet="LocationMagazineTitleWarningSet" />
+            <End Role="MagazineTitle" EntitySet="MagazineTitleSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LanguageMagazineSerie" Association="VooraadModels.FK_LanguageMagazineSerie">
+            <End Role="Language" EntitySet="LanguageSet" />
+            <End Role="MagazineTitle" EntitySet="MagazineTitleSet" />
+          </AssociationSet>
+          <AssociationSet Name="MagazineMagazineTitle" Association="VooraadModels.MagazineMagazineTitle">
+            <End Role="Magazine" EntitySet="MagazineSet" />
+            <End Role="MagazineTitle" EntitySet="MagazineTitleSet" />
+          </AssociationSet>
+          <AssociationSet Name="MagazineTransactionMagazine" Association="VooraadModels.MagazineTransactionMagazine">
+            <End Role="MagazineTransaction" EntitySet="MagazineTransactionSet" />
+            <End Role="Magazine" EntitySet="MagazineSet" />
+          </AssociationSet>
+          <AssociationSet Name="MagazineTransactionLeverancier" Association="VooraadModels.MagazineTransactionLeverancier">
+            <End Role="MagazineTransaction" EntitySet="MagazineTransactionSet" />
+            <End Role="Leverancier" EntitySet="LeverancierSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Adresse" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PostCode" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MagazineTransactionFrom" Relationship="VooraadModels.MagazineTransactionLocation" FromRole="Location" ToRole="MagazineTransaction" />
+          <NavigationProperty Name="MagazineTransactionTo" Relationship="VooraadModels.MagazineTransactionLocation1" FromRole="Location" ToRole="MagazineTransaction" />
+          <NavigationProperty Name="LocationMagazineWarning" Relationship="VooraadModels.LocationMagazineWarningLocation" FromRole="Location" ToRole="LocationMagazineWarning" />
+        </EntityType>
+        <EntityType Name="Magazine">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Jaargang" Type="Int16" Nullable="true" />
+          <Property Name="nummer" Type="Int16" Nullable="true" />
+          <Property Name="Verschijning" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UitSchappen" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="BarCode" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MagazineTitle" Relationship="VooraadModels.MagazineMagazineTitle" FromRole="Magazine" ToRole="MagazineTitle" />
+          <Property Name="MagazineTitleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MagazineTransaction" Relationship="VooraadModels.MagazineTransactionMagazine" FromRole="Magazine" ToRole="MagazineTransaction" />
+        </EntityType>
+        <EntityType Name="MagazineTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Value" Type="Int32" Nullable="false" />
+          <Property Name="LocationFromId" Type="Int32" Nullable="true" />
+          <Property Name="LocationToId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="LocationFrom" Relationship="VooraadModels.MagazineTransactionLocation" FromRole="MagazineTransaction" ToRole="Location" />
+          <NavigationProperty Name="LocationTo" Relationship="VooraadModels.MagazineTransactionLocation1" FromRole="MagazineTransaction" ToRole="Location" />
+          <Property Name="TransactionType" Type="VooraadModels.TransactionType" Nullable="false" />
+          <NavigationProperty Name="Magazine" Relationship="VooraadModels.MagazineTransactionMagazine" FromRole="MagazineTransaction" ToRole="Magazine" />
+          <Property Name="MagazineId" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="Leverancier" Relationship="VooraadModels.MagazineTransactionLeverancier" FromRole="MagazineTransaction" ToRole="Leverancier" />
+          <Property Name="LeverancierId" Type="Int32" Nullable="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        </EntityType>
+        <EntityType Name="Leverancier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Adresse" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="PostCode" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ProductLeverancier" Relationship="VooraadModels.LeverancierProductLeverancier" FromRole="Leverancier" ToRole="MagazineSerieLeverancier" />
+          <NavigationProperty Name="MagazineTransaction" Relationship="VooraadModels.MagazineTransactionLeverancier" FromRole="Leverancier" ToRole="MagazineTransaction" />
+        </EntityType>
+        <EntityType Name="MagazineTitleLeverancier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="Leverancier" Relationship="VooraadModels.LeverancierProductLeverancier" FromRole="MagazineSerieLeverancier" ToRole="Leverancier" />
+          <NavigationProperty Name="MagazineSerie" Relationship="VooraadModels.MagazineSerieMagazineSerieLeverancier" FromRole="MagazineSerieLeverancier" ToRole="MagazineTitle" />
+        </EntityType>
+        <EntityType Name="MagazineTitle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="MagazineSerieLeverancier" Relationship="VooraadModels.MagazineSerieMagazineSerieLeverancier" FromRole="MagazineTitle" ToRole="MagazineSerieLeverancier" />
+          <NavigationProperty Name="LocationMagazineTitleWarning" Relationship="VooraadModels.LocationMagazineTitleWarningMagazineTitle" FromRole="MagazineTitle" ToRole="LocationMagazineTitleWarning" />
+          <Property Name="Language_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LanguageSet" Relationship="VooraadModels.FK_LanguageMagazineSerie" FromRole="MagazineTitle" ToRole="Language" />
+          <NavigationProperty Name="Magazine" Relationship="VooraadModels.MagazineMagazineTitle" FromRole="MagazineTitle" ToRole="Magazine" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ShortName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="MagazineTitleSet" Relationship="VooraadModels.FK_LanguageMagazineSerie" FromRole="Language" ToRole="MagazineTitle" />
+        </EntityType>
+        <EntityType Name="LocationMagazineTitleWarning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ActiveTo" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" ConcurrencyMode="None" />
+          <NavigationProperty Name="Location" Relationship="VooraadModels.LocationMagazineWarningLocation" FromRole="LocationMagazineWarning" ToRole="Location" />
+          <NavigationProperty Name="MagazineTitle" Relationship="VooraadModels.LocationMagazineTitleWarningMagazineTitle" FromRole="LocationMagazineTitleWarning" ToRole="MagazineTitle" />
+        </EntityType>
+        <Association Name="MagazineTransactionLocation">
+          <End Type="VooraadModels.MagazineTransaction" Role="MagazineTransaction" Multiplicity="*" />
+          <End Type="VooraadModels.Location" Role="Location" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransaction">
+              <PropertyRef Name="LocationFromId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MagazineTransactionLocation1">
+          <End Type="VooraadModels.MagazineTransaction" Role="MagazineTransaction" Multiplicity="*" />
+          <End Type="VooraadModels.Location" Role="Location" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransaction">
+              <PropertyRef Name="LocationToId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LocationMagazineWarningLocation">
+          <End Type="VooraadModels.LocationMagazineTitleWarning" Role="LocationMagazineWarning" Multiplicity="0..1" />
+          <End Type="VooraadModels.Location" Role="Location" Multiplicity="1" />
+        </Association>
+        <Association Name="LeverancierProductLeverancier">
+          <End Type="VooraadModels.Leverancier" Role="Leverancier" Multiplicity="1" />
+          <End Type="VooraadModels.MagazineTitleLeverancier" Role="MagazineSerieLeverancier" Multiplicity="*" />
+        </Association>
+        <Association Name="MagazineSerieMagazineSerieLeverancier">
+          <End Type="VooraadModels.MagazineTitle" Role="MagazineTitle" Multiplicity="1" />
+          <End Type="VooraadModels.MagazineTitleLeverancier" Role="MagazineSerieLeverancier" Multiplicity="*" />
+        </Association>
+        <Association Name="LocationMagazineTitleWarningMagazineTitle">
+          <End Type="VooraadModels.LocationMagazineTitleWarning" Role="LocationMagazineTitleWarning" Multiplicity="0..1" />
+          <End Type="VooraadModels.MagazineTitle" Role="MagazineTitle" Multiplicity="1" />
+        </Association>
+        <!--<EnumType Name="TransactionType">
+          <Member Name="Intern" />
+          <Member Name="ShopToCustomer" />
+          <Member Name="FromLeverancier" />
+        </EnumType>-->
+        <Association Name="FK_LanguageMagazineSerie">
+          <End Type="VooraadModels.Language" Role="Language" Multiplicity="1" />
+          <End Type="VooraadModels.MagazineTitle" Role="MagazineTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTitle">
+              <PropertyRef Name="Language_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MagazineMagazineTitle">
+          <End Type="VooraadModels.Magazine" Role="Magazine" Multiplicity="*" />
+          <End Type="VooraadModels.MagazineTitle" Role="MagazineTitle" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="MagazineTitle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Magazine">
+              <PropertyRef Name="MagazineTitleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="TransactionType" />
+        <Association Name="MagazineTransactionMagazine">
+          <End Type="VooraadModels.MagazineTransaction" Role="MagazineTransaction" Multiplicity="*" />
+          <End Type="VooraadModels.Magazine" Role="Magazine" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Magazine">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransaction">
+              <PropertyRef Name="MagazineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MagazineTransactionLeverancier">
+          <End Type="VooraadModels.MagazineTransaction" Role="MagazineTransaction" Multiplicity="*" />
+          <End Type="VooraadModels.Leverancier" Role="Leverancier" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Leverancier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MagazineTransaction">
+              <PropertyRef Name="LeverancierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VooraadModelsStoreContainer" CdmEntityContainer="VooraadModelsContainer">
+    <EntitySetMapping Name="LocationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.Location)">
+        <MappingFragment StoreEntitySet="LocationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MagazineSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.Magazine)">
+        <MappingFragment StoreEntitySet="MagazineSet">
+                <ScalarProperty Name="MagazineTitleId" ColumnName="MagazineTitle_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="Jaargang" ColumnName="Jaargang" />
+          <ScalarProperty Name="nummer" ColumnName="nummer" />
+          <ScalarProperty Name="Verschijning" ColumnName="Verschijning" />
+          <ScalarProperty Name="UitSchappen" ColumnName="UitSchappen" />
+          <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MagazineTransactionSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.MagazineTransaction)">
+        <MappingFragment StoreEntitySet="MagazineTransactionSet">
+                <ScalarProperty Name="LeverancierId" ColumnName="Leverancier_Id" />
+                <ScalarProperty Name="MagazineId" ColumnName="Magazine_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="LocationFromId" ColumnName="LocationFromId" />
+          <ScalarProperty Name="LocationToId" ColumnName="LocationToId" />
+          <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+          </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LeverancierSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.Leverancier)">
+        <MappingFragment StoreEntitySet="LeverancierSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Adresse" ColumnName="Adresse" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MagazineTitleLeverancierSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.MagazineTitleLeverancier)">
+        <MappingFragment StoreEntitySet="MagazineTitleLeverancierSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MagazineTitleSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.MagazineTitle)">
+        <MappingFragment StoreEntitySet="MagazineTitleSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Language_Id" ColumnName="Language_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LanguageSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.Language)">
+        <MappingFragment StoreEntitySet="LanguageSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocationMagazineTitleWarningSet">
+      <EntityTypeMapping TypeName="IsTypeOf(VooraadModels.LocationMagazineTitleWarning)">
+        <MappingFragment StoreEntitySet="LocationMagazineTitleWarningSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ActiveTo" ColumnName="ActiveTo" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="LocationMagazineWarningLocation" TypeName="VooraadModels.LocationMagazineWarningLocation" StoreEntitySet="LocationMagazineTitleWarningSet">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="Id" ColumnName="Location_Id" />
+      </EndProperty>
+      <EndProperty Name="LocationMagazineWarning">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LeverancierProductLeverancier" TypeName="VooraadModels.LeverancierProductLeverancier" StoreEntitySet="MagazineTitleLeverancierSet">
+      <EndProperty Name="Leverancier">
+        <ScalarProperty Name="Id" ColumnName="Leverancier_Id" />
+      </EndProperty>
+      <EndProperty Name="MagazineSerieLeverancier">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MagazineSerieMagazineSerieLeverancier" TypeName="VooraadModels.MagazineSerieMagazineSerieLeverancier" StoreEntitySet="MagazineTitleLeverancierSet">
+      <EndProperty Name="MagazineTitle">
+        <ScalarProperty Name="Id" ColumnName="MagazineSerie_Id" />
+      </EndProperty>
+      <EndProperty Name="MagazineSerieLeverancier">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LocationMagazineTitleWarningMagazineTitle" TypeName="VooraadModels.LocationMagazineTitleWarningMagazineTitle" StoreEntitySet="LocationMagazineTitleWarningSet">
+      <EndProperty Name="MagazineTitle">
+        <ScalarProperty Name="Id" ColumnName="MagazineTitle_Id" />
+      </EndProperty>
+      <EndProperty Name="LocationMagazineTitleWarning">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="False" />
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

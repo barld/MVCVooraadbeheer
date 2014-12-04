@@ -1,0 +1,98 @@
+﻿@model MVCVooraadBeheer.Models.Magazine
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Magazine</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Jaargang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jaargang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nummer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nummer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Verschijning)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Verschijning)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UitSchappen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UitSchappen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BarCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BarCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MagazineTitle.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MagazineTitle.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
