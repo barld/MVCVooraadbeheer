@@ -54,7 +54,7 @@
             }
             else
             {
-                $.getJSON("@Url.Action("GetTotaleVooraadPerLocation")/"+value, function(data) {
+                $.getJSON("@Url.Action("GetTotaleVooraadPerLocation")", {id:value}, function(data) {
                     chart.clearChart();
                     rawData = data;
                     drawChart();
