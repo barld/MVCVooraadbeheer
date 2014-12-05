@@ -1,13 +1,7 @@
 ﻿<div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-        @{
-            List<string> l = ViewBag.subMenu as List<string>;
-        }
-        <!--<li>@Html.ActionLink("About", "About", "Home")</li>-->
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-        <li>@Html.ActionLink("Magazine Titles", "index", "MagazineTitles")</li>
-        <li>@Html.ActionLink("Magazines", "index", "Magazines")</li>
-        <li>@Html.ActionLink("languages", "Index", "Languages")</li>
     </ul>
 </div>
 

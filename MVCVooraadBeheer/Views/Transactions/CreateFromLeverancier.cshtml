@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LocationToId, "LocationToId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("LocationToId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("LocationToId", null, htmlAttributes: new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.LocationToId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TransactionType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.TransactionType, htmlAttributes: new { @class = "form-control" })
+                @Html.EnumDropDownListFor(model => model.TransactionType, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
             </div>
         </div>

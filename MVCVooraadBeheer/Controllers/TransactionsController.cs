@@ -73,7 +73,7 @@ namespace MVCVooraadBeheer.Controllers
             ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name");
             ViewBag.LeverancierId = db.LeverancierSet.Find(id) != null ? new SelectList(db.LeverancierSet, "Id", "Name", id) : new SelectList(db.LeverancierSet, "Id", "Name");
 
-            return View(new MagazineTransaction() { DateTime = DateTime.Now });
+            return View(new MagazineTransaction() { DateTime = DateTime.Now, TransactionType = TransactionType.FromLeverancier });
         }
 
         [HttpPost]
@@ -82,6 +82,7 @@ namespace MVCVooraadBeheer.Controllers
         {
             if(ModelState.IsValid)
             {
+                m.TransactionType = TransactionType.FromLeverancier;
                 db.MagazineTransactionSet.Add(m);
                 db.SaveChanges();
                 return RedirectToAction("index");

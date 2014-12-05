@@ -167,7 +167,6 @@
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\MagazinesController.cs" />
     <Compile Include="Controllers\MagazineTitlesController.cs" />
-    <Compile Include="Controllers\MagazineTransactionsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\VoorraadController.cs" />
