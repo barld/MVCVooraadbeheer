@@ -11,11 +11,14 @@ namespace MVCVooraadBeheer.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class LocationMagazineTitleWarning
     {
         public int Id { get; set; }
         public bool Active { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> ActiveTo { get; set; }
         public string value { get; set; }
     
