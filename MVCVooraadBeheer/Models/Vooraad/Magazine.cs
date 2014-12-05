@@ -24,8 +24,10 @@ namespace MVCVooraadBeheer.Models
         public bool Active { get; set; }
         public Nullable<short> Jaargang { get; set; }
         public Nullable<short> nummer { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime Verschijning { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> UitSchappen { get; set; }
         public int BarCode { get; set; }
