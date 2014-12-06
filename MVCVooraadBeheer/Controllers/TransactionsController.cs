@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVCVooraadBeheer.Models;
+using PagedList;
 
 namespace MVCVooraadBeheer.Controllers
 {
@@ -15,10 +16,15 @@ namespace MVCVooraadBeheer.Controllers
         private VooraadModelsContainer db = new VooraadModelsContainer();
 
         // GET: Transactions
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var magazineTransactionSet = db.MagazineTransactionSet.Include(m => m.LocationFrom).Include(m => m.LocationTo).Include(m => m.Magazine).Include(m => m.Leverancier);
-            return View(magazineTransactionSet.ToList());
+
+            magazineTransactionSet = magazineTransactionSet.OrderBy(t => t.DateTime);
+
+            int pageNumber = page ?? 1;
+
+            return View(magazineTransactionSet.ToPagedList(pageNumber, 10));
         }
 
         // GET: Transactions/Details/5
