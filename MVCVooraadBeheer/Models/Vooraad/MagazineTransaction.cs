@@ -22,7 +22,7 @@ namespace MVCVooraadBeheer.Models
         public System.DateTime DateTime { get; set; }
         public int Value { get; set; }
         public int MagazineId { get; set; }
-        public int LeverancierId { get; set; }
+        public Nullable<int> LeverancierId { get; set; }
         public Nullable<int> LocationFromId { get; set; }
         public Nullable<int> LocationToId { get; set; }
         public TransactionType TransactionType { get; set; }

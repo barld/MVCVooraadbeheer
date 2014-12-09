@@ -43,24 +43,57 @@
         chart.draw(data, options);
     }
 
+    var donutChart;
+    function drawDonut(rawDonutData)
+    {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', "naam tijdschrift");
+        data.addColumn('number', "aantal");
+
+        for(var i in rawDonutData)
+        {
+            data.addRow([rawDonutData[i].name, rawDonutData[i].value])
+        }
+
+        var options = {
+            title: 'huidige voorraad per tijdschrift',
+            pieHole: 0.4,
+        };
+
+        donutChart = new google.visualization.PieChart(document.getElementById('donutchart_div'));
+        donutChart.draw(data, options);
+    }
+
     $(document).ready(function(){
         $('#Location_Id').change(function() {
             var value = $('#Location_Id').val();
+            chart.clearChart();
+            if(!(donutChart === undefined))
+                donutChart.clearChart();
             if(value == '-1')
             {
-                chart.clearChart();
                 rawData = DataAlleLocaties;
                 drawChart();
             }
             else
             {
-                $.getJSON("@Url.Action("GetTotaleVooraadPerLocation")", {id:value}, function(data) {
-                    chart.clearChart();
+                $.getJSON("@Url.Action("GetTotaleHistoricalVoorraadPerLocation")", {id:value}, function(data) {
                     rawData = data;
                     drawChart();
                 } );
+                drawDonutWithData(value);
             }
         });
+
+        //donut
+
+        function drawDonutWithData(id) {
+            $.getJSON("@Url.Action("GetCurrentVoorraad")", {locationId:id}, function(data) {                
+                drawDonut(data);
+            } );
+        }   
+        
+        
     });
 
 </script>
@@ -68,3 +101,5 @@
 <div id="chart_div" class="col-md-12" style="height: 500px;">
     <noscript><p>Op deze pagina wordt een grafiek getoond met de actuele vooraad. Om dit zichtbaar te maken is helaas javascript nodig.</p></noscript>
 </div>
+
+<div id="donutchart_div" class="col-md-12" style="height: 500px;"></div>

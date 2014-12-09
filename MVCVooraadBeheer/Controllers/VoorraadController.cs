@@ -30,8 +30,8 @@ namespace MVCVooraadBeheer.Controllers
         public ActionResult GetTotaleVoorraad()
         {
             List<VoorraadItem> rtw = new List<VoorraadItem>();
-            int totaal=0;
-            foreach(var t in db.MagazineTransactionSet.ToList().OrderBy(x => x.DateTime))
+            int totaal = 0;
+            foreach (var t in db.MagazineTransactionSet.ToList().OrderBy(x => x.DateTime))
             {
                 if (t.TransactionType == TransactionType.FromLeverancier)
                     totaal += t.Value;
@@ -43,18 +43,18 @@ namespace MVCVooraadBeheer.Controllers
 
             rtw = rtw
                 .GroupBy(o => o.date)
-                .Select(l => 
-                    new VoorraadItem 
-                    { 
-                        date = l.Key, 
-                        totaalTijdschriften = (int)l.ToList().Average(item => (double)item.totaalTijdschriften) 
+                .Select(l =>
+                    new VoorraadItem
+                    {
+                        date = l.Key,
+                        totaalTijdschriften = (int)l.ToList().Average(item => (double)item.totaalTijdschriften)
                     })
                 .ToList();
 
             return Json(rtw, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTotaleVooraadPerLocation(int? id)
+        public JsonResult GetTotaleHistoricalVoorraadPerLocation(int? id)
         {
             if (id == null || db.LocationSet.Find(id) == null)
                 return Json("not found", JsonRequestBehavior.AllowGet);
@@ -63,7 +63,7 @@ namespace MVCVooraadBeheer.Controllers
             var location = db.LocationSet.Find(id);
             List<VoorraadItem> rtw = new List<VoorraadItem>();
             int totaal = 0;
-            foreach(var tr in location.MagazineTransactionFrom.Union(location.MagazineTransactionTo).OrderBy(t => t.DateTime))
+            foreach (var tr in location.MagazineTransactionFrom.Union(location.MagazineTransactionTo).OrderBy(t => t.DateTime))
             {
                 totaal += (tr.LocationToId == id) ? tr.Value : -tr.Value;
 
@@ -81,6 +81,31 @@ namespace MVCVooraadBeheer.Controllers
                 .ToList();
 
             return Json(rtw, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetCurrentVoorraad(int? locationId)
+        {
+            /*if (db.LocationSet.Find(locationId) == null)
+                return Json(null, JsonRequestBehavior.AllowGet);*/
+
+            int id = locationId ?? 0;
+
+            var data =
+                from set2 in
+                    (from mSet in
+                         (from tr in db.MagazineTransactionSet
+                          where tr.LocationFromId == id || tr.LocationToId == id
+                          group tr by tr.MagazineId into PerMagazine
+                          select PerMagazine)
+                     select
+                    from m in mSet
+                    group m by m.LocationToId == id into to
+                    select to)
+                select new {name = set2.FirstOrDefault().FirstOrDefault().Magazine.Name, value = set2.Select(x => x.Sum(x2 => x.Key ? x2.Value : -x2.Value)).Sum() };
+
+            data = data.Where(row => row.value > 0);
+
+            return Json(data.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }
