@@ -39,8 +39,7 @@ namespace MVCVooraadBeheer.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            ViewBag.Id = new SelectList(db.LocationMagazineTitleWarningSet, "Id", "value");
-            return View();
+            return View(new Location { Active = true });
         }
 
         // POST: Locations/Create
@@ -92,32 +91,6 @@ namespace MVCVooraadBeheer.Controllers
             }
             ViewBag.Id = new SelectList(db.LocationMagazineTitleWarningSet, "Id", "value", location.Id);
             return View(location);
-        }
-
-        // GET: Locations/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Location location = db.LocationSet.Find(id);
-            if (location == null)
-            {
-                return HttpNotFound();
-            }
-            return View(location);
-        }
-
-        // POST: Locations/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Location location = db.LocationSet.Find(id);
-            db.LocationSet.Remove(location);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

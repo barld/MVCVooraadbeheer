@@ -96,6 +96,18 @@ namespace MVCVooraadBeheer.Controllers
             return View();
         }
 
+        public ActionResult CustomerTransaction(int? locationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CustomerTransaction(MagazineTransaction m)
+        {
+            throw new NotImplementedException();
+        }
+
         // GET: Transactions/Edit/5
         public ActionResult Edit(int? id)
         {
