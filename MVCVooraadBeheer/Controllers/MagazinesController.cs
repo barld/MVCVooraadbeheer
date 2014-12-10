@@ -15,9 +15,13 @@ namespace MVCVooraadBeheer.Controllers
         private VooraadModelsContainer db = new VooraadModelsContainer();
 
         // GET: Magazines
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
-            var magazineSet = db.MagazineSet.Include(m => m.MagazineTitle);
+            var magazineSet = db.MagazineSet.Where(m => m.Active).Include(m => m.MagazineTitle);
+
+            if (!string.IsNullOrWhiteSpace(SearchString))
+                magazineSet = magazineSet.Where(m => m.Name.Contains(SearchString));
+
             return View(magazineSet.ToList());
         }
 
