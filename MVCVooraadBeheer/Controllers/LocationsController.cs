@@ -15,9 +15,13 @@ namespace MVCVooraadBeheer.Controllers
         private VooraadModelsContainer db = new VooraadModelsContainer();
 
         // GET: Locations
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
             var locationSet = db.LocationSet.Include(l => l.LocationMagazineWarning);
+            if(!string.IsNullOrWhiteSpace(SearchString))
+            {
+                locationSet = locationSet.Where(x => x.Name.Contains(SearchString));
+            }          
             return View(locationSet.ToList());
         }
 

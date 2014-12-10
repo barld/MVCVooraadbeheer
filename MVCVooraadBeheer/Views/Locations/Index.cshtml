@@ -7,9 +7,12 @@
 
 <h2>locaties overzicht</h2>
 
-@using(@Html.BeginForm())
+@using (Html.BeginForm())
 {
-    
+    <p>
+        zoek bij naam: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
 }
 
 
