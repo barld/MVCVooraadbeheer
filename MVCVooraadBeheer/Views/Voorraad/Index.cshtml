@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Index";
+    int locationId = ViewBag.id;
 }
 
 <h2>Voorraad</h2>
@@ -13,7 +14,7 @@
 <script type="text/javascript">
     var chart;
     google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
+    //google.setOnLoadCallback(drawChart);
 
     var DataAlleLocaties = @{Html.RenderAction("GetTotaleVoorraad");
     this.Response.ContentType = "text/html";
@@ -46,6 +47,7 @@
     var donutChart;
     function drawDonut(rawDonutData)
     {
+
         var data = new google.visualization.DataTable();
         data.addColumn('string', "naam tijdschrift");
         data.addColumn('number', "aantal");
@@ -64,39 +66,59 @@
         donutChart.draw(data, options);
     }
 
-    $(document).ready(function(){
-        $('#Location_Id').change(function() {
-            var value = $('#Location_Id').val();
+    function drawDonutWithData(id) {
+        $.getJSON("@Url.Action("GetCurrentVoorraad")", {locationId:id}, function(data) {
+            drawDonut(data);
+        } );        
+    }
+
+    var lchange = function() {
+        var value = $('#Location_Id').val();
+        if(chart !== undefined)
             chart.clearChart();
-            if(!(donutChart === undefined))
-                donutChart.clearChart();
-            if(value == '-1')
-            {
-                rawData = DataAlleLocaties;
+        if(donutChart !== undefined)
+            donutChart.clearChart();
+        if(value == '-1')
+        {
+            rawData = DataAlleLocaties;
+            drawChart();
+        }
+        else
+        {
+            $.getJSON("@Url.Action("GetTotaleHistoricalVoorraadPerLocation")", {id:value}, function(data) {
+                rawData = data;
                 drawChart();
-            }
-            else
-            {
-                $.getJSON("@Url.Action("GetTotaleHistoricalVoorraadPerLocation")", {id:value}, function(data) {
-                    rawData = data;
-                    drawChart();
-                } );
-                drawDonutWithData(value);
-            }
-        });
-
-        //donut
-
-        function drawDonutWithData(id) {
-            $.getJSON("@Url.Action("GetCurrentVoorraad")", {locationId:id}, function(data) {                
-                drawDonut(data);
             } );
-        }   
-        
-        
-    });
+            drawDonutWithData(value);
+        }
+    }
 
+    $(document).ready(function(){
+        $('#Location_Id').change(lchange);
+    });
+    
 </script>
+
+@if(locationId > 0)
+{
+    <script>
+        $().ready(function() {
+            $('#Location_Id').val(@locationId);
+            lchange();
+
+        });
+    </script>
+
+}
+else
+{
+    <script>
+        $().ready(function() {
+            drawChart();
+
+        });
+    </script>
+}
 
 <div id="chart_div" class="col-md-12" style="height: 500px;">
     <noscript><p>Op deze pagina wordt een grafiek getoond met de actuele vooraad. Om dit zichtbaar te maken is helaas javascript nodig.</p></noscript>

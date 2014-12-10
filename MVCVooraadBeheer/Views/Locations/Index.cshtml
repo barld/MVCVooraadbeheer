@@ -62,6 +62,7 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                         @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                        @Html.ActionLink("voorraad", "index", "Voorraad", new { id = item.Id }, null)
                     </td>
                 </tr>
 }

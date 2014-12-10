@@ -6,17 +6,13 @@
 
 <h2>Index</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("index", "MagazineTitles",FormMethod.Get))
 {
     <p>
         zoek bij naam: @Html.TextBox("SearchString")
         <input type="submit" value="Search" />
     </p>
 }
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>

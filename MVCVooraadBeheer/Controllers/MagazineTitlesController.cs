@@ -20,7 +20,7 @@ namespace MVCVooraadBeheer.Controllers
             var magazineTitleSet = db.MagazineTitleSet.Include(m => m.LocationMagazineTitleWarning).Include(m => m.LanguageSet);
             if (!string.IsNullOrWhiteSpace(SearchString))
                 magazineTitleSet = magazineTitleSet.Where(mt => mt.Name.Contains(SearchString));
-            
+
             return View(magazineTitleSet.ToList());
         }
 

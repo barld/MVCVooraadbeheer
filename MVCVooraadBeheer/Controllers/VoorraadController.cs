@@ -20,6 +20,8 @@ namespace MVCVooraadBeheer.Controllers
         // GET: Voorraad
         public ActionResult Index(int? id)
         {
+            ViewBag.id = id ?? 0;
+
             var l = db.LocationSet.ToList();
             l.Insert(0, new Location { Id = -1, Name = "Alle locaties" });
             ViewBag.location_Id = new SelectList(l, "Id", "Name");
