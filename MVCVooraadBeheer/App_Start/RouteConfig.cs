@@ -11,6 +11,9 @@ namespace MVCVooraadBeheer
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            //routing vrij stellen
+            routes.MapMvcAttributeRoutes();
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
