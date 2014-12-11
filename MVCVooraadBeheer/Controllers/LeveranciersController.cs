@@ -17,7 +17,7 @@ namespace MVCVooraadBeheer.Controllers
         // GET: Leveranciers
         public ActionResult Index()
         {
-            return View(db.LeverancierSet.ToList());
+            return View(db.LeverancierSet.Where(l =>l.Active).ToList());
         }
 
         // GET: Leveranciers/Details/5

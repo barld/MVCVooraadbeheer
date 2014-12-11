@@ -89,32 +89,6 @@ namespace MVCVooraadBeheer.Controllers
             return View(language);
         }
 
-        // GET: Languages/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Language language = db.LanguageSet.Find(id);
-            if (language == null)
-            {
-                return HttpNotFound();
-            }
-            return View(language);
-        }
-
-        // POST: Languages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Language language = db.LanguageSet.Find(id);
-            db.LanguageSet.Remove(language);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

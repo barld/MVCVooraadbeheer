@@ -98,32 +98,6 @@ namespace MVCVooraadBeheer.Controllers
             return View(magazine);
         }
 
-        // GET: Magazines/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Magazine magazine = db.MagazineSet.Find(id);
-            if (magazine == null)
-            {
-                return HttpNotFound();
-            }
-            return View(magazine);
-        }
-
-        // POST: Magazines/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Magazine magazine = db.MagazineSet.Find(id);
-            db.MagazineSet.Remove(magazine);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

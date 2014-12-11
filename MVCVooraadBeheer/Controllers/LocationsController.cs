@@ -17,7 +17,7 @@ namespace MVCVooraadBeheer.Controllers
         // GET: Locations
         public ActionResult Index(string SearchString)
         {
-            var locationSet = db.LocationSet.Include(l => l.LocationMagazineWarning);
+            var locationSet = db.LocationSet.Where(l => l.Active).Include(l => l.LocationMagazineWarning);
             if(!string.IsNullOrWhiteSpace(SearchString))
             {
                 locationSet = locationSet.Where(x => x.Name.Contains(SearchString));
