@@ -317,6 +317,7 @@
     <Content Include="Views\Locations\subMenu.cshtml" />
     <Content Include="Views\Voorraad\Index.cshtml" />
     <Content Include="Views\Shared\subMenu.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

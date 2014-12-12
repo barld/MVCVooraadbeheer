@@ -52,6 +52,12 @@ namespace MVCVooraadBeheer.Controllers
             }
         }
 
+        public ActionResult Index()
+        {
+            return View(UserManager.Users.ToList());
+        }
+
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -136,7 +142,6 @@ namespace MVCVooraadBeheer.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -145,7 +150,6 @@ namespace MVCVooraadBeheer.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
