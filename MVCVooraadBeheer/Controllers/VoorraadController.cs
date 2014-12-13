@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace MVCVooraadBeheer.Controllers
 {
@@ -108,6 +109,18 @@ namespace MVCVooraadBeheer.Controllers
             data = data.Where(row => row.value > 0);
 
             return Json(data.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public string BekijkWaarschuwingen(int? locationId)
+        {
+            var titles = db.MagazineTitleSet.ToList();
+            var warnings = db.LocationMagazineTitleWarningSet.Where(w => w.Location.Id == locationId).Include(x=> x.MagazineTitle).ToList();
+
+            var result = titles.Select(t => {
+                return new { title = t, warning = warnings.Exists(lmw => lmw.MagazineTitle.Id == t.Id) ? warnings.First(lmw => lmw.Id == t.Id).value : 0 };
+            });
+
+            return string.Empty;
         }
     }
 }

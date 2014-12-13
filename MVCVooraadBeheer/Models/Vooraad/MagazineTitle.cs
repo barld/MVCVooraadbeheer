@@ -18,6 +18,7 @@ namespace MVCVooraadBeheer.Models
         {
             this.Magazine = new HashSet<Magazine>();
             this.MagazineSerieLeverancier = new HashSet<MagazineTitleLeverancier>();
+            LocationMagazineTitleWarning = new HashSet<LocationMagazineTitleWarning>();
         }
     
         public int Id { get; set; }
@@ -26,7 +27,7 @@ namespace MVCVooraadBeheer.Models
     
         public virtual ICollection<Magazine> Magazine { get; set; }
         public virtual ICollection<MagazineTitleLeverancier> MagazineSerieLeverancier { get; set; }
-        public virtual LocationMagazineTitleWarning LocationMagazineTitleWarning { get; set; }
+        public virtual ICollection<LocationMagazineTitleWarning> LocationMagazineTitleWarning { get; set; }
         public virtual Language LanguageSet { get; set; }
     }
 }

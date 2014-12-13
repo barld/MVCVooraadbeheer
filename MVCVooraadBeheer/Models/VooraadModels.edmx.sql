@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 12/01/2014 22:13:24
+-- Date Created: 12/13/2014 17:26:58
 -- Generated from EDMX file: E:\data barld\Documents\Visual Studio 14\Projects\MVCVooraadBeheer\MVCVooraadBeheer\Models\VooraadModels.edmx
 -- --------------------------------------------------
 
@@ -17,55 +17,52 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_LanguageMagazineSerie]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MagazineTitleSet] DROP CONSTRAINT [FK_LanguageMagazineSerie];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LeverancierMagazineTransaction]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MagazineTransactionSet] DROP CONSTRAINT [FK_LeverancierMagazineTransaction];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LeverancierProductLeverancier]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MagazineTitleLeverancierSet] DROP CONSTRAINT [FK_LeverancierProductLeverancier];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LocationMagazineTitleWarningMagazineTitle]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LocationMagazineTitleWarningSet] DROP CONSTRAINT [FK_LocationMagazineTitleWarningMagazineTitle];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LocationMagazineWarningLocation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LocationMagazineTitleWarningSet] DROP CONSTRAINT [FK_LocationMagazineWarningLocation];
-GO
-IF OBJECT_ID(N'[dbo].[FK_MagazineMagazineTransaction]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MagazineTransactionSet] DROP CONSTRAINT [FK_MagazineMagazineTransaction];
-GO
-IF OBJECT_ID(N'[dbo].[FK_MagazineSerieMagazine]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MagazineSet] DROP CONSTRAINT [FK_MagazineSerieMagazine];
-GO
-IF OBJECT_ID(N'[dbo].[FK_MagazineSerieMagazineSerieLeverancier]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MagazineTitleLeverancierSet] DROP CONSTRAINT [FK_MagazineSerieMagazineSerieLeverancier];
-GO
 IF OBJECT_ID(N'[dbo].[FK_MagazineTransactionLocation]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MagazineTransactionSet] DROP CONSTRAINT [FK_MagazineTransactionLocation];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MagazineTransactionLocation1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[MagazineTransactionSet] DROP CONSTRAINT [FK_MagazineTransactionLocation1];
 GO
+IF OBJECT_ID(N'[dbo].[FK_LocationMagazineWarningLocation]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LocationSet] DROP CONSTRAINT [FK_LocationMagazineWarningLocation];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LeverancierProductLeverancier]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineTitleLeverancierSet] DROP CONSTRAINT [FK_LeverancierProductLeverancier];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MagazineSerieMagazineSerieLeverancier]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineTitleLeverancierSet] DROP CONSTRAINT [FK_MagazineSerieMagazineSerieLeverancier];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LocationMagazineTitleWarningMagazineTitle]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineTitleSet] DROP CONSTRAINT [FK_LocationMagazineTitleWarningMagazineTitle];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LanguageMagazineSerie]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineTitleSet] DROP CONSTRAINT [FK_LanguageMagazineSerie];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MagazineMagazineTitle]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineSet] DROP CONSTRAINT [FK_MagazineMagazineTitle];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MagazineTransactionMagazine]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineTransactionSet] DROP CONSTRAINT [FK_MagazineTransactionMagazine];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MagazineTransactionLeverancier]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MagazineTransactionSet] DROP CONSTRAINT [FK_MagazineTransactionLeverancier];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[LanguageSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LanguageSet];
-GO
-IF OBJECT_ID(N'[dbo].[LeverancierSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LeverancierSet];
-GO
-IF OBJECT_ID(N'[dbo].[LocationMagazineTitleWarningSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LocationMagazineTitleWarningSet];
-GO
 IF OBJECT_ID(N'[dbo].[LocationSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[LocationSet];
 GO
 IF OBJECT_ID(N'[dbo].[MagazineSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[MagazineSet];
+GO
+IF OBJECT_ID(N'[dbo].[MagazineTransactionSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MagazineTransactionSet];
+GO
+IF OBJECT_ID(N'[dbo].[LeverancierSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LeverancierSet];
 GO
 IF OBJECT_ID(N'[dbo].[MagazineTitleLeverancierSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[MagazineTitleLeverancierSet];
@@ -73,8 +70,11 @@ GO
 IF OBJECT_ID(N'[dbo].[MagazineTitleSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[MagazineTitleSet];
 GO
-IF OBJECT_ID(N'[dbo].[MagazineTransactionSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MagazineTransactionSet];
+IF OBJECT_ID(N'[dbo].[LanguageSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LanguageSet];
+GO
+IF OBJECT_ID(N'[dbo].[LocationMagazineTitleWarningSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LocationMagazineTitleWarningSet];
 GO
 
 -- --------------------------------------------------
@@ -117,7 +117,7 @@ CREATE TABLE [dbo].[MagazineTransactionSet] (
     [LocationToId] int  NULL,
     [TransactionType] int  NOT NULL,
     [MagazineId] int  NOT NULL,
-    [LeverancierId] int  NOT NULL
+    [LeverancierId] int  NULL
 );
 GO
 
@@ -161,7 +161,7 @@ CREATE TABLE [dbo].[LocationMagazineTitleWarningSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Active] bit  NOT NULL,
     [ActiveTo] datetime  NULL,
-    [value] nvarchar(max)  NOT NULL,
+    [value] int  NOT NULL,
     [Location_Id] int  NOT NULL,
     [MagazineTitle_Id] int  NOT NULL
 );

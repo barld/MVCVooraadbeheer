@@ -20,7 +20,7 @@ namespace MVCVooraadBeheer.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> ActiveTo { get; set; }
-        public string value { get; set; }
+        public int value { get; set; }
     
         public virtual Location Location { get; set; }
         public virtual MagazineTitle MagazineTitle { get; set; }
