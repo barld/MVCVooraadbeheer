@@ -318,6 +318,7 @@
     <Content Include="Views\Shared\subMenu.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Transactions\CreateInternTransaction.cshtml" />
+    <Content Include="Views\Transactions\CreateCustomerTransaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

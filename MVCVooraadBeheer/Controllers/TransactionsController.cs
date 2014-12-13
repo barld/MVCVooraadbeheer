@@ -65,16 +65,26 @@ namespace MVCVooraadBeheer.Controllers
             return View(m);
         }
 
-        public ActionResult CustomerTransaction(int? locationId)
+        public ActionResult CreateCustomerTransaction(int? locationId)
         {
-            throw new NotImplementedException();
+            ViewBag.LocationFromId = new SelectList(db.LocationSet, "Id", "Name", locationId);
+            ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name");
+
+            return View(new MagazineTransaction() { DateTime = DateTime.Now, TransactionType = TransactionType.ShopToCustomer });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CustomerTransaction(MagazineTransaction m)
+        public ActionResult CreateCustomerTransaction(MagazineTransaction m)
         {
-            throw new NotImplementedException();
+            if (ModelState.IsValid)
+            {
+                m.TransactionType = TransactionType.ShopToCustomer;
+                db.MagazineTransactionSet.Add(m);
+                db.SaveChanges();
+                return RedirectToAction("index");
+            }
+            return View(m);
         }
 
         public ActionResult CreateInternTransaction(int? from, int? to)
