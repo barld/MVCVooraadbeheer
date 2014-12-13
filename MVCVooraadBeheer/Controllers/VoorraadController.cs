@@ -34,12 +34,13 @@ namespace MVCVooraadBeheer.Controllers
         {
             List<VoorraadItem> rtw = new List<VoorraadItem>();
             int totaal = 0;
-            foreach (var t in db.MagazineTransactionSet.ToList().OrderBy(x => x.DateTime))
+            foreach (var t in db.MagazineTransactionSet.OrderBy(x => x.DateTime).ToList())
             {
                 if (t.TransactionType == TransactionType.FromLeverancier)
                     totaal += t.Value;
                 else if (t.TransactionType == TransactionType.ShopToCustomer)
                     totaal -= t.Value;
+                else continue;
 
                 rtw.Add(new VoorraadItem { date = t.DateTime.ToString("MM-dd-yyyy"), totaalTijdschriften = totaal });
             }
