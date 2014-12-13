@@ -41,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TransactionType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.TransactionType, htmlAttributes: new { @class = "form-control" })
+                @Html.EnumDropDownListFor(model => model.TransactionType, htmlAttributes: new { @class = "form-control", disabled="disables" })
                 @Html.ValidationMessageFor(model => model.TransactionType, "", new { @class = "text-danger" })
             </div>
         </div>
