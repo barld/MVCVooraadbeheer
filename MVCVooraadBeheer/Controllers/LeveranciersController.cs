@@ -38,7 +38,7 @@ namespace MVCVooraadBeheer.Controllers
         // GET: Leveranciers/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Leverancier { Active = true });
         }
 
         // POST: Leveranciers/Create

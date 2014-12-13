@@ -42,37 +42,6 @@ namespace MVCVooraadBeheer.Controllers
             return View(magazineTransaction);
         }
 
-        // GET: Transactions/Create
-        public ActionResult Create()
-        {
-            ViewBag.LocationFromId = new SelectList(db.LocationSet, "Id", "Name");
-            ViewBag.LocationToId = new SelectList(db.LocationSet, "Id", "Name");
-            ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name");
-            ViewBag.LeverancierId = new SelectList(db.LeverancierSet, "Id", "Name");
-            return View();
-        }
-
-        // POST: Transactions/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateTime,Value,LocationFromId,LocationToId,TransactionType,MagazineId,LeverancierId")] MagazineTransaction magazineTransaction)
-        {
-            if (ModelState.IsValid)
-            {
-                db.MagazineTransactionSet.Add(magazineTransaction);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.LocationFromId = new SelectList(db.LocationSet, "Id", "Name", magazineTransaction.LocationFromId);
-            ViewBag.LocationToId = new SelectList(db.LocationSet, "Id", "Name", magazineTransaction.LocationToId);
-            ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name", magazineTransaction.MagazineId);
-            ViewBag.LeverancierId = new SelectList(db.LeverancierSet, "Id", "Name", magazineTransaction.LeverancierId);
-            return View(magazineTransaction);
-        }
-
         public ActionResult CreateFromLeverancier(int? id)
         {
             ViewBag.LocationToId = new SelectList(db.LocationSet, "Id", "Name");
@@ -93,7 +62,7 @@ namespace MVCVooraadBeheer.Controllers
                 db.SaveChanges();
                 return RedirectToAction("index");
             }
-            return View();
+            return View(m);
         }
 
         public ActionResult CustomerTransaction(int? locationId)
@@ -108,70 +77,29 @@ namespace MVCVooraadBeheer.Controllers
             throw new NotImplementedException();
         }
 
-        // GET: Transactions/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult CreateInternTransaction(int? from, int? to)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MagazineTransaction magazineTransaction = db.MagazineTransactionSet.Find(id);
-            if (magazineTransaction == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.LocationFromId = new SelectList(db.LocationSet, "Id", "Name", magazineTransaction.LocationFromId);
-            ViewBag.LocationToId = new SelectList(db.LocationSet, "Id", "Name", magazineTransaction.LocationToId);
-            ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name", magazineTransaction.MagazineId);
-            ViewBag.LeverancierId = new SelectList(db.LeverancierSet, "Id", "Name", magazineTransaction.LeverancierId);
-            return View(magazineTransaction);
+            ViewBag.LocationToId = new SelectList(db.LocationSet, "Id", "Name");
+            ViewBag.LocationFromId = ViewBag.LocationToId;
+            ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name");
+
+            return View(new MagazineTransaction() { DateTime = DateTime.Now, TransactionType = TransactionType.Intern });
         }
 
-        // POST: Transactions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DateTime,Value,LocationFromId,LocationToId,TransactionType,MagazineId,LeverancierId")] MagazineTransaction magazineTransaction)
+        public ActionResult CreateInternTransaction(MagazineTransaction m)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(magazineTransaction).State = EntityState.Modified;
+                m.TransactionType = TransactionType.Intern;
+                db.MagazineTransactionSet.Add(m);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("index");
             }
-            ViewBag.LocationFromId = new SelectList(db.LocationSet, "Id", "Name", magazineTransaction.LocationFromId);
-            ViewBag.LocationToId = new SelectList(db.LocationSet, "Id", "Name", magazineTransaction.LocationToId);
-            ViewBag.MagazineId = new SelectList(db.MagazineSet, "Id", "Name", magazineTransaction.MagazineId);
-            ViewBag.LeverancierId = new SelectList(db.LeverancierSet, "Id", "Name", magazineTransaction.LeverancierId);
-            return View(magazineTransaction);
+            return View(m);
         }
 
-        // GET: Transactions/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MagazineTransaction magazineTransaction = db.MagazineTransactionSet.Find(id);
-            if (magazineTransaction == null)
-            {
-                return HttpNotFound();
-            }
-            return View(magazineTransaction);
-        }
-
-        // POST: Transactions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            MagazineTransaction magazineTransaction = db.MagazineTransactionSet.Find(id);
-            db.MagazineTransactionSet.Remove(magazineTransaction);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {
