@@ -50,7 +50,8 @@
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                         @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                        @Html.ActionLink("voorraad", "index", "Voorraad", new { id = item.Id }, null)
+                        @Html.ActionLink("voorraad", "index", "Voorraad", new { id = item.Id }, null) |
+                        @Html.ActionLink("waarschuwingen", "OverzichtWaarschuwingen", "LocationMagazineTitleWarnings", new { locationid = item.Id }, null)
                     </td>
                 </tr>
 }
