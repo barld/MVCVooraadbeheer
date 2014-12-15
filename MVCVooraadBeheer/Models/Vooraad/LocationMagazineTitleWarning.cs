@@ -11,11 +11,13 @@ namespace MVCVooraadBeheer.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     
     public partial class LocationMagazineTitleWarning
     {
         public int Id { get; set; }
+        [DefaultValue(true)]
         public bool Active { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
@@ -23,7 +25,9 @@ namespace MVCVooraadBeheer.Models
         public int value { get; set; }
 
         //foreign keys
+        [DisplayName("locatie")]
         public int LocationId { get; set; }
+        [DisplayName("tijdschrift")]
         public int MagazineTitleId { get; set; }
     
         public virtual Location Location { get; set; }

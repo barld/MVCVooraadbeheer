@@ -49,10 +49,11 @@ namespace MVCVooraadBeheer.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Active,ActiveTo,value,LocationId,MagazineTitleId")] LocationMagazineTitleWarning locationMagazineTitleWarning)
+        public ActionResult Create([Bind(Include = "Id,ActiveTo,value,LocationId,MagazineTitleId")] LocationMagazineTitleWarning locationMagazineTitleWarning)
         {
             if (ModelState.IsValid)
             {
+                locationMagazineTitleWarning.Active = true;
                 db.LocationMagazineTitleWarningSet.Add(locationMagazineTitleWarning);
                 db.SaveChanges();
                 return RedirectToAction("Index");
