@@ -17,14 +17,20 @@ namespace MVCVooraadBeheer.Models
     public partial class MagazineTransaction
     {
         public int Id { get; set; }
+        [DisplayName("Datum")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime DateTime { get; set; }
         public int Value { get; set; }
+        [DisplayName("tijdschrift")]
         public int MagazineId { get; set; }
+        [DisplayName("leverancier")]     
         public Nullable<int> LeverancierId { get; set; }
+        [DisplayName("Locatie van")]
         public Nullable<int> LocationFromId { get; set; }
+        [DisplayName("Locatie naar")]
         public Nullable<int> LocationToId { get; set; }
+        [DisplayName("transactie type")]
         public TransactionType TransactionType { get; set; }
     
         public virtual Location LocationFrom { get; set; }
