@@ -20,6 +20,12 @@
         <th>
             @Html.DisplayNameFor(model => model.value)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MagazineTitle.Name)
+        </th>
         <th></th>
     </tr>
 
@@ -33,6 +39,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MagazineTitle.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

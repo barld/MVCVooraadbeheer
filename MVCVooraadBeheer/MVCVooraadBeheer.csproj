@@ -189,6 +189,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="Models\VooraadModels1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VooraadModels.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Vooraad\Language.cs" />
     <Compile Include="Models\Vooraad\Leverancier.cs" />
     <Compile Include="Models\Vooraad\Location.cs" />
@@ -338,7 +343,7 @@
   <ItemGroup>
     <EntityDeploy Include="Models\VooraadModels.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>VooraadModels.Designer.cs</LastGenOutput>
+      <LastGenOutput>VooraadModels1.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>

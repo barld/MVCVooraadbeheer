@@ -4,26 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="80bd76e12c404f5eaa1720fe1da67f96" Name="Diagram1" ZoomLevel="85" >
+      <Diagram DiagramId="80bd76e12c404f5eaa1720fe1da67f96" Name="Diagram1" ZoomLevel="83" >
         <EntityTypeShape EntityType="VooraadModels.Location" Width="1.875" PointX="0.5" PointY="3.75" />
         <EntityTypeShape EntityType="VooraadModels.Magazine" Width="1.875" PointX="6.5" PointY="3.75" />
         <EntityTypeShape EntityType="VooraadModels.MagazineTransaction" Width="1.5" PointX="3.25" PointY="3.75" />
         <EntityTypeShape EntityType="VooraadModels.Leverancier" Width="1.5" PointX="4.625" PointY="8.375" />
         <EntityTypeShape EntityType="VooraadModels.MagazineTitleLeverancier" Width="1.875" PointX="7.875" PointY="8.625" />
-        <EntityTypeShape EntityType="VooraadModels.MagazineTitle" Width="1.5" PointX="9.25" PointY="3.625" />
+        <EntityTypeShape EntityType="VooraadModels.MagazineTitle" Width="1.5" PointX="9.25" PointY="3.75" />
         <EntityTypeShape EntityType="VooraadModels.Language" Width="1.5" PointX="12.5" PointY="3.625" />
         <EntityTypeShape EntityType="VooraadModels.LocationMagazineTitleWarning" Width="2.5" PointX="3.75" PointY="0.5" />
         <AssociationConnector Association="VooraadModels.MagazineTransactionLocation" />
         <AssociationConnector Association="VooraadModels.MagazineTransactionLocation1" />
-        <AssociationConnector Association="VooraadModels.LocationMagazineWarningLocation" />
         <AssociationConnector Association="VooraadModels.LeverancierProductLeverancier" />
         <AssociationConnector Association="VooraadModels.MagazineSerieMagazineSerieLeverancier" />
-        <AssociationConnector Association="VooraadModels.LocationMagazineTitleWarningMagazineTitle" ManuallyRouted="false" >
-        </AssociationConnector>
         <AssociationConnector Association="VooraadModels.FK_LanguageMagazineSerie" />
         <AssociationConnector Association="VooraadModels.MagazineMagazineTitle" />
         <AssociationConnector Association="VooraadModels.MagazineTransactionMagazine" />
         <AssociationConnector Association="VooraadModels.MagazineTransactionLeverancier" />
+        <AssociationConnector Association="VooraadModels.LocationMagazineTitleWarningLocation" />
+        <AssociationConnector Association="VooraadModels.LocationMagazineTitleWarningMagazineTitle" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

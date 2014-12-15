@@ -21,6 +21,10 @@ namespace MVCVooraadBeheer.Models
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> ActiveTo { get; set; }
         public int value { get; set; }
+
+        //foreign keys
+        public int LocationId { get; set; }
+        public int MagazineTitleId { get; set; }
     
         public virtual Location Location { get; set; }
         public virtual MagazineTitle MagazineTitle { get; set; }

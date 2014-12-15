@@ -17,7 +17,8 @@ namespace MVCVooraadBeheer.Controllers
         // GET: LocationMagazineTitleWarnings
         public ActionResult Index()
         {
-            return View(db.LocationMagazineTitleWarningSet.ToList());
+            var locationMagazineTitleWarningSet = db.LocationMagazineTitleWarningSet.Include(l => l.Location).Include(l => l.MagazineTitle);
+            return View(locationMagazineTitleWarningSet.ToList());
         }
 
         // GET: LocationMagazineTitleWarnings/Details/5
@@ -38,6 +39,8 @@ namespace MVCVooraadBeheer.Controllers
         // GET: LocationMagazineTitleWarnings/Create
         public ActionResult Create()
         {
+            ViewBag.LocationId = new SelectList(db.LocationSet, "Id", "Name");
+            ViewBag.MagazineTitleId = new SelectList(db.MagazineTitleSet, "Id", "Name");
             return View();
         }
 
@@ -46,7 +49,7 @@ namespace MVCVooraadBeheer.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Active,ActiveTo,value")] LocationMagazineTitleWarning locationMagazineTitleWarning)
+        public ActionResult Create([Bind(Include = "Id,Active,ActiveTo,value,LocationId,MagazineTitleId")] LocationMagazineTitleWarning locationMagazineTitleWarning)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +58,8 @@ namespace MVCVooraadBeheer.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.LocationId = new SelectList(db.LocationSet, "Id", "Name", locationMagazineTitleWarning.LocationId);
+            ViewBag.MagazineTitleId = new SelectList(db.MagazineTitleSet, "Id", "Name", locationMagazineTitleWarning.MagazineTitleId);
             return View(locationMagazineTitleWarning);
         }
 
@@ -70,6 +75,8 @@ namespace MVCVooraadBeheer.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.LocationId = new SelectList(db.LocationSet, "Id", "Name", locationMagazineTitleWarning.LocationId);
+            ViewBag.MagazineTitleId = new SelectList(db.MagazineTitleSet, "Id", "Name", locationMagazineTitleWarning.MagazineTitleId);
             return View(locationMagazineTitleWarning);
         }
 
@@ -78,7 +85,7 @@ namespace MVCVooraadBeheer.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Active,ActiveTo,value")] LocationMagazineTitleWarning locationMagazineTitleWarning)
+        public ActionResult Edit([Bind(Include = "Id,Active,ActiveTo,value,LocationId,MagazineTitleId")] LocationMagazineTitleWarning locationMagazineTitleWarning)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +93,8 @@ namespace MVCVooraadBeheer.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.LocationId = new SelectList(db.LocationSet, "Id", "Name", locationMagazineTitleWarning.LocationId);
+            ViewBag.MagazineTitleId = new SelectList(db.MagazineTitleSet, "Id", "Name", locationMagazineTitleWarning.MagazineTitleId);
             return View(locationMagazineTitleWarning);
         }
 
