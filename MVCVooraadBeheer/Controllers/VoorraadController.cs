@@ -8,6 +8,7 @@ using System.Data.Entity;
 
 namespace MVCVooraadBeheer.Controllers
 {
+    [Authorize]
     public class VoorraadController : Controller
     {
         class VoorraadItem

@@ -10,6 +10,7 @@ using MVCVooraadBeheer.Models;
 
 namespace MVCVooraadBeheer.Controllers
 {
+    [Authorize]
     public class MagazinesController : Controller
     {
         private VooraadModelsContainer db = new VooraadModelsContainer();

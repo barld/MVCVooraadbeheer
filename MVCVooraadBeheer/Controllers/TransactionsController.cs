@@ -11,6 +11,7 @@ using PagedList;
 
 namespace MVCVooraadBeheer.Controllers
 {
+    [Authorize]
     public class TransactionsController : Controller
     {
         private VooraadModelsContainer db = new VooraadModelsContainer();

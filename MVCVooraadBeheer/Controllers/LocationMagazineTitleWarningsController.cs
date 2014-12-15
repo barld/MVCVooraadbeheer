@@ -10,6 +10,7 @@ using MVCVooraadBeheer.Models;
 
 namespace MVCVooraadBeheer.Controllers
 {
+    [Authorize]
     [RoutePrefix("warnings")]
     public class LocationMagazineTitleWarningsController : Controller
     {
