@@ -306,7 +306,7 @@
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
     <Content Include="Views\Transactions\CreateFromLeverancier.cshtml" />
-    <Content Include="Views\Transactions\subMenu.cshtml" />
+    <Content Include="Views\Voorraad\subMenu.cshtml" />
     <Content Include="Views\Locations\Create.cshtml" />
     <Content Include="Views\Locations\Details.cshtml" />
     <Content Include="Views\Locations\Edit.cshtml" />
@@ -317,6 +317,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Transactions\CreateInternTransaction.cshtml" />
     <Content Include="Views\Transactions\CreateCustomerTransaction.cshtml" />
+    <Content Include="Views\Transactions\subMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
