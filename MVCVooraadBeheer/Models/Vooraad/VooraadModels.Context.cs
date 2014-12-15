@@ -33,5 +33,7 @@ namespace MVCVooraadBeheer.Models
         public virtual DbSet<MagazineTitle> MagazineTitleSet { get; set; }
         public virtual DbSet<Language> LanguageSet { get; set; }
         public virtual DbSet<LocationMagazineTitleWarning> LocationMagazineTitleWarningSet { get; set; }
+
+        public System.Data.Entity.DbSet<MVCVooraadBeheer.Controllers.LocationWarningModelView> LocationWarningModelViews { get; set; }
     }
 }

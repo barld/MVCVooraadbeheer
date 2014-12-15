@@ -128,6 +128,39 @@ namespace MVCVooraadBeheer.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult OverzichtWaarschuwingen(int? locationid)
+        {
+            var location = db.LocationSet.Find(locationid);
+            if (location == null)
+                return RedirectToAction("Index");
+
+            int id = locationid ?? 0;
+
+            var data =
+                from set2 in
+                    (from mSet in
+                         (from tr in db.MagazineTransactionSet
+                          where tr.LocationFromId == id || tr.LocationToId == id
+                          group tr by tr.MagazineId into PerMagazine
+                          select PerMagazine)
+                     select
+                    from m in mSet
+                    group m by m.LocationToId == id into to
+                    select to)
+                select new LocationWarningModelView 
+                {
+                    Name = set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.Name, 
+                    totaalTijdschriften = set2.Select(x => x.Sum(x2 => x.Key ? x2.Value : -x2.Value)).Sum(),
+                    minimaaleWaarde = set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.LocationMagazineTitleWarning.Count(x => x.LocationId > id) > 0 ? set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.LocationMagazineTitleWarning.FirstOrDefault(x => x.LocationId > id).value : 0
+                };
+
+            data = data.GroupBy(x => x.Name).Select(g => new LocationWarningModelView { Name = g.Key, totaalTijdschriften = g.Sum(x => x.totaalTijdschriften), minimaaleWaarde = g.FirstOrDefault().minimaaleWaarde });
+
+            //data = data.Where(row => row.totaalTijdschriften > 0);
+
+            return View(data.ToList());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -136,5 +169,16 @@ namespace MVCVooraadBeheer.Controllers
             }
             base.Dispose(disposing);
         }
+    }
+
+    public class LocationWarningModelView
+    {
+        public int ID { get; set; }
+
+        public int totaalTijdschriften { get; set; }
+
+        public int minimaaleWaarde { get; set; }
+
+        public string Name { get; set; }
     }
 }
