@@ -10,11 +10,13 @@ using MVCVooraadBeheer.Models;
 
 namespace MVCVooraadBeheer.Controllers
 {
+    [RoutePrefix("warnings")]
     public class LocationMagazineTitleWarningsController : Controller
     {
         private VooraadModelsContainer db = new VooraadModelsContainer();
 
         // GET: LocationMagazineTitleWarnings
+        [Route]
         public ActionResult Index()
         {
             var locationMagazineTitleWarningSet = db.LocationMagazineTitleWarningSet.Include(l => l.Location).Include(l => l.MagazineTitle);

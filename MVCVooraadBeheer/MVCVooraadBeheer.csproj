@@ -330,6 +330,7 @@
     <Content Include="Views\LocationMagazineTitleWarnings\Edit.cshtml" />
     <Content Include="Views\LocationMagazineTitleWarnings\Index.cshtml" />
     <Content Include="Views\Account\subMenu.cshtml" />
+    <Content Include="Views\LocationMagazineTitleWarnings\subMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

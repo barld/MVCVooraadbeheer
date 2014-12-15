@@ -16,7 +16,11 @@ namespace MVCVooraadBeheer.Models
     
     public partial class Magazine
     {
-
+        public Magazine()
+        {
+            //zorgt dat er niet een standaart waarde van 1 januarie het jaar null komt te staan
+            Verschijning = DateTime.Now;
+        }
 
         public int Id { get; set; }
         public string Name { get; set; }
