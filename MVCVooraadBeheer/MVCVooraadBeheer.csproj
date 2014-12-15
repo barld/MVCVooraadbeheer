@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LeveranciersController.cs" />
+    <Compile Include="Controllers\LocationMagazineTitleWarningsController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\MagazinesController.cs" />
     <Compile Include="Controllers\MagazineTitlesController.cs" />
@@ -318,6 +319,11 @@
     <Content Include="Views\Transactions\CreateInternTransaction.cshtml" />
     <Content Include="Views\Transactions\CreateCustomerTransaction.cshtml" />
     <Content Include="Views\Transactions\subMenu.cshtml" />
+    <Content Include="Views\LocationMagazineTitleWarnings\Create.cshtml" />
+    <Content Include="Views\LocationMagazineTitleWarnings\Delete.cshtml" />
+    <Content Include="Views\LocationMagazineTitleWarnings\Details.cshtml" />
+    <Content Include="Views\LocationMagazineTitleWarnings\Edit.cshtml" />
+    <Content Include="Views\LocationMagazineTitleWarnings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

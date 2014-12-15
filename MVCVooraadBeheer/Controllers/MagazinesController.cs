@@ -44,7 +44,7 @@ namespace MVCVooraadBeheer.Controllers
         public ActionResult Create()
         {
             ViewBag.MagazineTitleId = new SelectList(db.MagazineTitleSet, "Id", "Name");
-            return View();
+            return View(new Magazine { Active = true });
         }
 
         // POST: Magazines/Create
