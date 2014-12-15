@@ -1,8 +1,6 @@
 ﻿<div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-        @{
-            List<string> l = ViewBag.subMenu as List<string>;
-        }
+        <li>@Html.ActionLink("overzicht", "Index")</li>
         <li>@Html.ActionLink("nieuwe levering", "CreateFromLeverancier")</li>
         <li>@Html.ActionLink("interne transactie", "CreateInternTransaction")</li>
         <li>@Html.ActionLink("verkoop", "CreateCustomerTransaction")</li>
