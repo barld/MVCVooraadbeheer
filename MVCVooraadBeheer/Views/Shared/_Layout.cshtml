@@ -21,7 +21,11 @@
                 </button>
                 @Html.ActionLink("TijdschriftenShop", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            
             <div class="navbar-collapse collapse">
+            @using Microsoft.AspNet.Identity
+            @if (Request.IsAuthenticated)
+            {
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Voorraad", "Index", "Voorraad")</li>
                     <li>@Html.ActionLink("Magazines", "index", "Magazines")</li>
@@ -31,6 +35,7 @@
                     <li>@Html.ActionLink("Accounts", "Index", "Account")</li>
                     <li>@Html.ActionLink("warnings", "Index", "LocationMagazineTitleWarnings")</li>
                 </ul>
+            }
                 @Html.Partial("_LoginPartial")
             </div>
             @Html.Partial("subMenu")
