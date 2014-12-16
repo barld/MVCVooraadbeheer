@@ -149,16 +149,23 @@ namespace MVCVooraadBeheer.Controllers
                     select to)
                 select new LocationWarningModelView 
                 {
+                    ID = set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.Id,
                     Name = set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.Name, 
                     totaalTijdschriften = set2.Select(x => x.Sum(x2 => x.Key ? x2.Value : -x2.Value)).Sum(),
-                    minimaaleWaarde = set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.LocationMagazineTitleWarning.Count(x => x.LocationId > id) > 0 ? set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.LocationMagazineTitleWarning.FirstOrDefault(x => x.LocationId > id).value : 0
+                    //minimaaleWaarde = db.LocationSet.Find(id) == null ? 0 : db.LocationSet.Find(id).LocationMagazineTitleWarning.FirstOrDefault(w => w.MagazineTitleId == set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.Id).value //set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.LocationMagazineTitleWarning.Count(x => x.LocationId > id) > 0 ? set2.FirstOrDefault().FirstOrDefault().Magazine.MagazineTitle.LocationMagazineTitleWarning.FirstOrDefault(x => x.LocationId > id).value : 0
                 };
 
-            data = data.GroupBy(x => x.Name).Select(g => new LocationWarningModelView { Name = g.Key, totaalTijdschriften = g.Sum(x => x.totaalTijdschriften), minimaaleWaarde = g.FirstOrDefault().minimaaleWaarde });
+            data = data.GroupBy(x => x.Name).Select(g => new LocationWarningModelView { ID=g.FirstOrDefault().ID, Name = g.Key, totaalTijdschriften = g.Sum(x => x.totaalTijdschriften) });
 
             //data = data.Where(row => row.totaalTijdschriften > 0);
+            var ldata = data.ToList();
+            for (int i = 0; i < ldata.Count;i++ )
+            {
+                int mid = ldata[i].ID;
+                ldata[i].minimaaleWaarde = db.LocationMagazineTitleWarningSet.Count(x => x.MagazineTitleId == mid && x.LocationId == id) > 0 ? db.LocationMagazineTitleWarningSet.FirstOrDefault(x => x.MagazineTitleId == mid && x.LocationId == id).value : 0;
+            }
 
-            return View(data.ToList());
+            return View(ldata);
         }
 
         protected override void Dispose(bool disposing)
@@ -173,6 +180,9 @@ namespace MVCVooraadBeheer.Controllers
 
     public class LocationWarningModelView
     {
+        /// <summary>
+        /// magazine titleId
+        /// </summary>
         public int ID { get; set; }
 
         public int totaalTijdschriften { get; set; }

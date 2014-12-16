@@ -18,8 +18,9 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model)
+{
+    <tr class="details @(item.minimaaleWaarde > item.totaalTijdschriften ? "rowWarning" : string.Empty)" >
         <td>@Html.DisplayFor(m => item.Name) </td>
         <td>
             @Html.DisplayFor(modelItem => item.totaalTijdschriften)
@@ -29,10 +30,17 @@
         </td>
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
         </td>
     </tr>
 }
 
 </table>
+
+<style>
+    .rowWarning{
+        background-color : #ff8d00;
+        color : white;
+    }
+</style>
